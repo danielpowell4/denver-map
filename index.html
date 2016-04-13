@@ -17,7 +17,7 @@
             <div id="map"></div>
         </div>
 
-        <!-- Content that is toggled in DOM -->
+        <!-- Content that is repainted based on clicked neighborhood -->
         <section class="hoodDescriptionWrapper" data-bind="with: activeNeighborhood">
           <div data-bind="attr: {id: id}" class="hoodDescription">
                   <div class="writeUp">
@@ -54,6 +54,6 @@
     <script src="main.js"></script>
     <!-- Make the Map work -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAdxvEXEwebipdOCtmD9P1OtId4TaVvcA&signed_in=true&callback=initMap"></script>
-    
+
   </body>
 </html>
