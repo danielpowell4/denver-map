@@ -4,128 +4,171 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Pinnacle REM: Denver's Neighborhoods</title>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 
 
     <style>
       html, body {
-        height: 100%;
         margin: 0;
         padding: 0;
+        background-color: #f2f1ed;
+        font-family: "source sans pro", sans-serif;
+        font-weight: 400;
+        color: #434243;
+        height: 100%;
+      }
+      .wrapper{
+        min-height: 100%;
+        margin-bottom: -3em;
+      }
+      .wrapper::after {
+        content: "";
+        display: block;
+      }
+      .wrapper::after, footer{
+        height: 3em;
+      }
+      footer{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: .5em 0;
+        width: 100%;
+        position: relative;
+        bottom: 0;
+        background-color: #666;
+        color: #fff;
+      }
+      footer div{
+        margin-right: 3em;
+      }
+      footer h4, footer p{
+        margin: 0;
+        text-align: right;
+      }
+      h2{
+        color: #121212;
+        font-weight: 700;
+        margin: 0;
+        padding: .5em 0 0 0;
       }
       #map {
         height: 480px;
-        margin-bottom: 24px;
-      }
-
-      .buffer-8{
-        padding-top: 8px;
-      }
-
-      .buffer-16 {
-        padding-top: 24px;
-      }
-
-      .keyFeats {
-        background-color: rgb(248,248,248);
-	padding-top: 12px;
-	padding-left: 8px;
-      }
-
-      ul {
-        padding-left: 18px;
-      }
-
-      li {
-        padding-bottom: 12px;
-      }
-
-      .active {
-        visibility: visible;
-      }
-
-      .hidden {
+        margin-bottom: 2em;
+        border-bottom: 1px solid rgba(0,0,0,.12);
       }
 
       .bottom-gap {
         margin-bottom: 48px;
       }
+      .keyFeats {
+        max-width: 380px;
+        min-width: 220px;
+        width: 80%;
+	    }
 
-      .keyFeats h2 {
-    	padding-left: 22px;
-        padding-top: 12px;
+      .keyFeats:hover, .writeUp:hover{
+        -webkit-transform: translate3d(0,-.3125em,0);
+        -moz-transform: translate3d(0,-.3125em,0);
+        transform: translate3d(0,-.3125em,0);
+        -webkit-transition: -webkit-transform 125ms ease;
+        -moz-transition: -moz-transform 125ms ease;
+        transition: transform 125ms ease;
       }
 
-	.keyFeats li {
-    	padding-left: 9px;
-    	padding-right: 17px;
+      .keyFeats, .writeUp{
+      -webkit-transition: -webkit-transform 125ms ease;
+      -moz-transition: -moz-transform 125ms ease;
+      transition: transform 125ms ease;
+      height: 0%;
+      border-radius: 2px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      background-color: #fff;
+      box-shadow: .25em .25em 0 rgba(0,0,0,.12);
+      padding: 2vh 2.3em 6vh;
+      }
+      .writeUp{
+        max-width: 580px;
+        min-width: 220px;
+        width: 80%;
       }
 
+    	.keyFeats ul {
+        margin: 0;
+        padding: 0 0 0 2em;
+      }
+    	.keyFeats li {
+        	padding: 0 2em 1em 0;
+      }
+      .keyFeats li:last-of-type{
+        padding: 0 2em 0 0;
+      }
       .row .row {
          margin: 0 auto !important;
       }
 
 	.hoodDescriptionWrapper {
-	 margin: 0 2.56vw;
+	 margin: 0 2.56vw 4em;
+   min-height: 10vh;
 	}
   .hoodDescription{
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
+    position: relative;
+  }
 
-  }
-  .writeUp{
-    max-width: 580px;
-    min-width: 220px;
-    width: 80%;
-    order: 1;
-    padding: 0 2vw 0 0;
-  }
-  .keyFeats{
-    max-width: 380px;
-    min-width: 220px;
-    width: 80%;
-    order: 2
-  }
+
+
   @media screen and (max-width: 1065){
     .writeUp{
       padding: 0;
     }
   }
-  section{}
+
     </style>
 
 
   </head>
   <body>
+    <div class="wrapper">
 
-<!--Map goes here!-->
 
-       <div class="row">
-            <div class="twelve columns">
-                <div id="map"></div>
-            </div>
+        <!--Map goes here!-->
+        <div class="row">
+            <div id="map"></div>
         </div>
+
+        <!-- Content that is toggled in DOM -->
+        <section class="hoodDescriptionWrapper" data-bind="with: activeNeighborhood">
+          <div data-bind="attr: {id: id}" class="hoodDescription">
+                  <div class="writeUp">
+                      <h2 data-bind="text: name"></h2>
+                      <p data-bind="text: writeUp"></p>
+                  </div>
+                  <div class="keyFeats">
+                      <h2>Key Features</h2>
+                      <p>
+                        <ul data-bind="foreach: keyFeats">
+                           <li data-bind="text: $data"></li>
+                        </ul>
+                      </p>
+                  </div>
+          </div>
+        </section>
+
+  </div> <!-- wrapper -->
+
+  <footer>
+    <div>
+      <h4>bloominteractive.co</h4>
+      <p>built for PinnacleREM.com</p>
     </div>
+  </footer>
 
-    <!-- Content that is toggled in DOM -->
-    <section class="hoodDescriptionWrapper" data-bind="with: activeNeighborhood">
-      <div data-bind="attr: {id: id}" class="hoodDescription">
-              <div class="writeUp">
-                  <h2 data-bind="text: name"></h2>
-                  <p class="buffer-8" data-bind="text: writeUp"></p>
-              </div>
-              <div class="keyFeats">
-                  <h2>Key Features</h2>
-                  <p>
-                    <ul data-bind="foreach: keyFeats">
-                       <li data-bind="text: $data"></li>
-                    </ul>
-                  </p>
-              </div>
-      </div>
-    </section>
-
-</div>
 
     <!--Put in jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
